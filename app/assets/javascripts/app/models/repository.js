@@ -38,11 +38,11 @@ Travis.Repository = Travis.Record.extend(Travis.Helpers.Common, {
 
   builds: function() {
     return Travis.Build.pushesByRepositoryId(this.get('id'));
-  }.property().cacheable(),
+  }.property('id').cacheable(),
 
   pull_requests: function() {
     return Travis.Build.pullRequestsByRepositoryId(this.get('id'));
-  }.property().cacheable(),
+  }.property('id').cacheable(),
 
   lastBuild: function() {
     return Travis.Build.find(this.get('last_build_id'));
@@ -78,7 +78,7 @@ Travis.Repository = Travis.Record.extend(Travis.Helpers.Common, {
 
   urlLastBuild: function() {
     return '#!/' + this.get('slug') + '/builds/' + this.get('last_build_id');
-  }.property('last_build_id').cacheable(),
+  }.property('slug', 'last_build_id').cacheable(),
 
   urlGithub: function() {
     return 'http://github.com/' + this.get('slug');
@@ -94,7 +94,7 @@ Travis.Repository = Travis.Record.extend(Travis.Helpers.Common, {
 
   urlGithubAdmin: function() {
     return this.get('url') + '/admin/hooks#travis_minibucket';
-  }.property('slug').cacheable(),
+  }.property('url').cacheable(),
 
   urlBranches: function() {
     return '#!/' + this.get('slug') + '/branch_summary';
